@@ -181,6 +181,9 @@ jobs:
         run: |
           BUILDX_PLATFORMS=linux/arm64 IMAGE=velero VERSION=pr-test make container
           docker save velero:pr-test -o ./velero.tar
+      - name: Install MinIO
+        run:
+          docker run -d --rm -p 9000:9000 -e "MINIO_ACCESS_KEY=minio" -e "MINIO_SECRET_KEY=minio123" -e "MINIO_DEFAULT_BUCKETS=bucket,additional-bucket" avinashyadavpuresoftware/velero_minio:latest
   # Run E2E test against all kubernetes versions on kind
   run-e2e-test_for_arm64:
     needs: build_for_arm64
@@ -208,9 +211,6 @@ jobs:
         id: go
       - name: Check out the code
         uses: actions/checkout@v2
-      - name: Install MinIO
-        run:
-          docker run -d --rm -p 9000:9000 -e "MINIO_ACCESS_KEY=minio" -e "MINIO_SECRET_KEY=minio123" -e "MINIO_DEFAULT_BUCKETS=bucket,additional-bucket" avinashyadavpuresoftware/velero_minio:latest
       - uses: Avinash828/setup-kind@v0.5.0
         with:
           version: "v0.14.0"
