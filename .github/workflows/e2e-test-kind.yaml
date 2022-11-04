@@ -23,14 +23,14 @@ jobs:
         with:
           path: ./_output/bin/linux/amd64/velero
           # The cache key a combination of the current PR number and the commit SHA
-          key: velero-cli-${{ github.event.pull_request.number }}-${{ github.sha }}
+          key: velero-cli-${{ github.event.pull_request.number }}-${{ github.sha }}-aa
       - name: Fetch built image
         id: image-cache
         uses: actions/cache@v2
         with:
           path: ./velero.tar
           # The cache key a combination of the current PR number and the commit SHA
-          key: velero-image-${{ github.event.pull_request.number }}-${{ github.sha }}
+          key: velero-image-${{ github.event.pull_request.number }}-${{ github.sha }}-aa
       - name: Fetch cached go modules
         uses: actions/cache@v2
         if: steps.cli-cache.outputs.cache-hit != 'true'
