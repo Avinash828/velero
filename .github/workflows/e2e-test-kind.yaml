@@ -23,7 +23,7 @@ jobs:
         with:
           path: ./_output/bin/linux/amd64/velero
           # The cache key a combination of the current PR number and the commit SHA
-          key: velero-cli-${{ github.event.pull_request.number }}-${{ github.sha }}-${{RUNNER_ARCH}}
+          key: velero-cli-${{ github.event.pull_request.number }}-${{ github.sha }}-${{env.RUNNER_ARCH}}
       - name: Fetch built image
         id: image-cache
         uses: actions/cache@v2
