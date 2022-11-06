@@ -258,7 +258,7 @@ jobs:
               GINKGO_FOCUS='Basic\]\[ClusterResource' VELERO_IMAGE=velero:pr-test \
               make -C test/e2e run
               kind delete cluster
-              $(docker ps -a | grep avinashyadavpuresoftware/velero_minio:latest | awk '{print $1}')
+              docker stop $(docker ps -a | grep avinashyadavpuresoftware/velero_minio:latest | awk '{print $1}')
         timeout-minutes: 30
       - name: Upload debug bundle
         if: ${{ failure() }}
