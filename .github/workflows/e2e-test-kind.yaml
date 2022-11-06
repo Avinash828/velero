@@ -208,11 +208,6 @@ jobs:
           - 1.24.0
       fail-fast: false
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.18
-        id: go
       - name: Install MinIO
         run:
           docker run -d --rm -p 9000:9000 -e "MINIO_ACCESS_KEY=minio" -e "MINIO_SECRET_KEY=minio123" -e "MINIO_DEFAULT_BUCKETS=bucket,additional-bucket" avinashyadavpuresoftware/velero_minio:latest
@@ -236,13 +231,6 @@ jobs:
         run:
           kind load image-archive velero.tar
       # always try to fetch the cached go modules as the e2e test needs it either
-      - name: Fetch cached go modules
-        uses: actions/cache@v2
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
       - name: Run E2E test
         run: |
 
