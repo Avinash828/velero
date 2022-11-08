@@ -196,9 +196,9 @@ jobs:
       matrix:
         k8s:
           # doesn't cover 1.15 as 1.15 doesn't support "apiextensions.k8s.io/v1" that is needed for the case
-          #- 1.15.12
-          #- 1.16.15
-          #- 1.17.17
+          #- 1.15.12      Will not work due
+          #- 1.16.15      to cgroup v2
+          #- 1.17.17         issue.
           #- 1.18.20
           - 1.19.16
           - 1.20.15
@@ -259,7 +259,7 @@ jobs:
               make -C test/e2e run
               kind delete cluster
               docker stop $(docker ps -a | grep avinashyadavpuresoftware/velero_minio:latest | awk '{print $1}')
-        timeout-minutes: 50
+        timeout-minutes: 55
       - name: Upload debug bundle
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
